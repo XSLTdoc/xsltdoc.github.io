@@ -10,24 +10,31 @@
       which provide easy browsing through the documentation. The
       XSLT source code is available with syntax highlighting.
     
-    XSLTdoc was developed in a project funded by the European Space Agency under contract 18664/04/NL/LvH.
     
-      XSLTdoc is written in XSLT 2.0 and is documented with XSLTdoc (This page). It is freely available on a GPL licence.
-    
-    
-          
+      XSLTdoc was developed in a project funded by the European Space Agency 
+      under contract 18664/04/NL/LvH.
     
     
-      Project Page on SourceForge.
+      XSLTdoc is written in XSLT 2.0 and is documented with XSLTdoc (This 
+      page). It is freely available on a GPL licence.
     
     
-      Please use the Forum on SourceForge if you need help or have comments on XSLTdoc.
+      Project Page 
+      on GitHub.
+    
+    
+      Please open a GitHub 
+        issue if you need help or have comments on XSLTdoc.
+    
+    This tool has recently been worked on a bit to make it easier to
+      install and use. Please see the README file on
+      GitHub for some instructions on how you can install and run it very
+      easily.
+      The instructions below have not been completely updated yet
+      to reflect recent changes.
     
     Table of Contents
     
-      
-        News
-      
       
         Features
       
@@ -46,33 +53,12 @@
       
         Copyright And License
       
-    
-    News
-      January 16, 2009
-      A bugfix release 1.2.1 is available for download.
-      Changelog
       
-        Changed output format from XML to XHTML
-        Changed output encoding to UTF-8
-        Fixed a bug where xd:detail was not printed
-        xml:xd inline tag supports an href attribute which allows to include external XML markup
-        Enabled the Forum on sourceforge
+        
+          Release notes
       
     
-      December 14, 2007
-      Release 1.2 is available for download.
-      Thanks to Johannes Katelaan and Sascha Mantscheff for their contributions.
-      New Features
-      
-        added section for documentation on xsl:variable
-        added section for documentation on xsl:attribute-set
-        implemented  xd:link for referencing templates
-        supports xsl:key elements
-      
-      January 5, 2005
-      Release 1.1 is available for download
-      December 20, 2004
-      Released Version 1.0.1
+
     Features
     
       Documentation is embedded in the XSL program
@@ -88,9 +74,10 @@
     
     
     Installing XSLTdoc
-    Installation of XSLTdoc is simply done by unzipping the XSLTdoc
+     Installation of XSLTdoc is simply done by unzipping the XSLTdoc
       distribution file in a dedicated target directory (usually called
       XSLTdoc). 
+
     Running XSLTdoc
     XSLTdoc is written in XSLT 2.0. You need an XSLT 2.0 processor to run it.
       The downloadable package of XSLTdoc includes the free version of the Saxon
@@ -280,14 +267,22 @@
     
     
     Download
-    Downloads are available through the sourceforge project page.
-    By downloading any of these files you are accepting the licence condition stated below.
+    Old downloads (1.2.2 and earlier) are available through the
+      sourceforge 
+        project page. We hope to have a new release of 1.3.0 out soon, and
+      there will be some different distribution channel then.
 
     Copyright And Licence
-    The software and documenation downloadable from this site is made up of the following items:
+    The software and documenation downloadable from this site is made up of 
+      the following items:
     
-      Software and documentation for the XSLTdoc documentation tool. The copyright for these items belongs to P&P Software. These items can be downloaded and used under the terms of the GNU General Public Licence.
-       The The Saxon XSLT and XQuery Processor from Saxonica Limited. This software is used and distributed in accordance with the terms of the Mozilla Public License Version 1.0.
+      Software and documentation for the XSLTdoc documentation tool. The 
+        copyright for these items belongs to P&P Software. These 
+        items can be downloaded and used under the terms of the GNU General Public 
+          Licence.
+       The The Saxon XSLT and XQuery Processor from Saxonica Limited. This software is 
+        used and distributed in accordance with the terms of the Mozilla Public License Version 
+          1.0.
       The XML to HTML Verbatim Formatter with Syntax Highlighting. This software was downloaded from http://www.informatik.hu-berlin.de/~obecker/XSLT/. There was no license information available on this site at the time of downloading (October 2004).
     
     
