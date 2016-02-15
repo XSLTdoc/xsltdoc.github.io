@@ -1,0 +1,312 @@
+
+  XSLTdoc - A Code Documentation Tool for XSLT
+  
+    
+      XSLTdoc is a Javadoc-like tool for all versions of XSLT (1.0,
+      1.1, 2.0). It defines
+      conventions to document XSL "code elements" directly in the source code. These
+      "documentation elements" are then extracted by the XSLTdoc
+      tool to build a documentation consisting of several linked HTML pages
+      which provide easy browsing through the documentation. The
+      XSLT source code is available with syntax highlighting.
+    
+    XSLTdoc was developed in a project funded by the European Space Agency under contract 18664/04/NL/LvH.
+    
+      XSLTdoc is written in XSLT 2.0 and is documented with XSLTdoc (This page). It is freely available on a GPL licence.
+    
+    
+          
+    
+    
+      Project Page on SourceForge.
+    
+    
+      Please use the Forum on SourceForge if you need help or have comments on XSLTdoc.
+    
+    Table of Contents
+    
+      
+        News
+      
+      
+        Features
+      
+      
+        Installing XSLTdoc
+      
+      
+        Running XSLTdoc
+      
+      
+        Documenting the code
+      
+      
+        Download
+      
+      
+        Copyright And License
+      
+    
+    News
+      January 16, 2009
+      A bugfix release 1.2.1 is available for download.
+      Changelog
+      
+        Changed output format from XML to XHTML
+        Changed output encoding to UTF-8
+        Fixed a bug where xd:detail was not printed
+        xml:xd inline tag supports an href attribute which allows to include external XML markup
+        Enabled the Forum on sourceforge
+      
+    
+      December 14, 2007
+      Release 1.2 is available for download.
+      Thanks to Johannes Katelaan and Sascha Mantscheff for their contributions.
+      New Features
+      
+        added section for documentation on xsl:variable
+        added section for documentation on xsl:attribute-set
+        implemented  xd:link for referencing templates
+        supports xsl:key elements
+      
+      January 5, 2005
+      Release 1.1 is available for download
+      December 20, 2004
+      Released Version 1.0.1
+    Features
+    
+      Documentation is embedded in the XSL program
+      Documenting of XSLT 2.0 functions
+      Syntax highlighted source code browsing
+      Generates documentation a whole set of stylesheets
+      Generates documentation for included and imported stylesheets
+      Layout is customizeable with CSS stylesheets
+      Site layout is based on a customizeable/interchangeable html template
+      Easely extensible with new tags
+      Open source under GPL license
+      Written in XSLT
+    
+    
+    Installing XSLTdoc
+    Installation of XSLTdoc is simply done by unzipping the XSLTdoc
+      distribution file in a dedicated target directory (usually called
+      XSLTdoc). 
+    Running XSLTdoc
+    XSLTdoc is written in XSLT 2.0. You need an XSLT 2.0 processor to run it.
+      The downloadable package of XSLTdoc includes the free version of the Saxon
+      XSLT and XQuery Processor from Saxonica Limited, which needs an installation
+      of a java virtual machine to be run.
+    
+      To generate a documentation for one or more XSLT programs you need to write a 
+      configuration file which inlcudes all the information needed for the generation process.
+      The configuration file is a simple XML file. Use the template below as a starting 
+      point for your own configuration file. Not mandatory elements are marked.
+    <?xml version="1.0" encoding="UTF-8"?>
+<XSLTdocConfig>
+  <Title>The title used on the main page</Title>
+  <Introduction>
+    This section is copied to the main documentation page. It can include any HTML tags.
+  </Introduction>
+  
+  <!-- 
+    The absolute or relative path to the target directory 
+    where the HTML files are created. If a relative path
+    is used it is always relative to the config file.
+   -->
+  <TargetDirectory path="../doc"/>
+  <!-- 
+    The absolute or relative path to the source directory.
+    This is where the XSLT source files can be found.
+    If a relative path is used it is always relative 
+    to the config file.
+   -->
+  <SourceDirectory path="./"/>
+  <!-- 
+    A list of source code files which shall be documented. 
+    Only stylesheets which are not included by another
+    have to be listed here. The included stylesheets
+    are found automatically by following the include or
+    the import statements in the including stylesheet.
+    Relative references are relative to the SourceDirectory
+    defined above.
+   -->
+  <RootStylesheets>
+    <File href="xsltdoc.xsl"/>
+    <File href="test.xsl"/>
+  </RootStylesheets>
+  
+  <!-- 
+    A list of CSS Stylesheet files which should be added to the standard CSS file included (XSLTdoc.css)
+    - Not mandatory
+    - media attribute optional.
+  -->
+  <AdditionalCSS>
+    <File href="print.css" media="print"/>
+  </AdditionalCSS>
+</XSLTdocConfig>
+    
+    To start the generation process use the configuration file 
+    as the input for the xsltdoc.xsl program. 
+    The command using Saxon 8 XSLT processor looks like this (while being in the XSLTdoc installation folder):
+    java -jar lib/saxon8.jar <configuration file> xsl/xsltdoc.xsl
+    Fonts, colors and layout of the HTML documentation are defined in two CSS
+      files which can be found in the CSS folder of the installation. Copy both
+      files to the folder where the documentation was generated. With ant this
+      step can easily be automated. See the build.xml ant-file that is used to
+      generate the documentation for XSLTdoc as an example:
+    <?xml version="1.0" standalone="yes" ?>
+<project name="XSLTdoc" default="xsltdoc" basedir=".">
+  <description>Ant Build file for the XSLTdoc program</description>
+
+  <path id="classpath">
+    <pathelement location="lib/saxon8.jar" />
+    <pathelement path="${java.class.path}" />
+  </path>
+
+  <target name="xsltdoc">
+    <delete dir="doc" />
+    <copy todir="doc">
+      <fileset dir="css">
+        <filename name="*.css" />
+      </fileset>
+    </copy>
+    <xslt force="true" style="xsl/xsltdoc.xsl" in="xsl/XSLTdocConfig.xml" out="doc/log.txt">
+      <!-- The target directory must be given relative to stylesheet  -->
+      <classpath refid="classpath" />
+    </xslt>
+  	<delete dir="doc/log.txt"/>
+  </target>
+</project>
+    
+    Documenting the code
+    Documentation elements are written in XML. Because XSLT is expressed in
+      XML too, it is necessary to define a new namespace for XSLTdoc to enable a
+      XSLT processor to distinguish between documentation and source code. The
+      URI for this namespace is
+      http://www.pnp-software.com/XSLTdoc. This namespace must be
+      declared in any stylesheet which uses XSLTdoc for documenting. Example:
+    <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xd="http://www.pnp-software.com/XSLTdoc" version="2.0">
+  ...
+<xsl:stylesheet>
+	General documenting rules
+    The documentation is normally added before the source element that should
+      be documented. Generally this looks like this (with the XSLTdoc namespace
+      mapped to xd):
+    <xd:doc>
+  ...
+</xd:doc>
+<xsl:...>
+    Any XSLTdoc documentation is enclosed in a xd:doc element.
+      If you just want to write a plain text comment the xd:doc element can contain simple text. 
+      Text before the first period is considered as short description, the remaining as detailed description:
+    <xd:doc>
+  This is the short description. And here comes a more detailed 
+  description that appears in the detailed view of the documentation only.
+</xd:doc>
+<xsl:...>
+    If you use this technique no HTML elements are allowed in the text. If you want to use HTML tags
+      within short and detailed description the text for the short and detailed description needs to enclosed in
+      special XSLTdoc tags:
+    <xd:doc>
+  <xd:short>This is the short description with <code>HTML tags</code>.</xd:short>
+  <xd:detail>
+    And here comes a <b>more detailed</b> 
+    description showed only in the detailed view of the documentation.
+  <xd:detail>
+</xd:doc>
+<xsl:...>
+	Stylesheet documentation
+	The documentaion of a stylesheet is the only exception where the documentation 
+	is written as a subelement of the target element (xsl:stylesheet). To mark a documentation element
+	as a stylesheet documentation the type attribute of the xd:doc element must be set to 'stylesheet'.
+	A stylesheet documentation can have the following subelements (properties): xd:author, xd:copyright, xd:cvsId, xd:svnId:
+    <xsl:stylesheet ...>
+  <xd:doc type="stylesheet">
+    ...
+    <xd:author>ibirrer</xd:author>
+    <xd:copyright>P&amp;P Software, 2007</xd:copyright>
+    <xd:cvsId>$Id: XSLTdocConfig.xml 42 2009-01-16 15:02:32Z ibirrer $</xd:cvsId>
+  <xd:doc/>
+  ...
+<xsl:stylesheet>
+	Properties can be added by writing a property extension. See the properties directory of the XSLTdoc
+	installation for examples.
+    Stylesheet Parameter
+    
+      To document a stylesheet parameter you can use the type attribute of the xd:doc element
+      to define its type:
+      <xsl:stylesheet ...>
+...
+  <xd:doc type="string">
+    A Stylesheet parameter of type string.
+  </xd:doc>
+  <xsl:param name="outputDir"/>
+  ...
+</xsl:stylesheet>
+	Function/Template Documentation
+    The parameter of a template or a function can be described with a
+      xd:param element. The name attribute is obligatory for
+      templates and functions while the type attribute is optional for
+      template definitions.
+    <xd:doc>
+  A template with a parameter of the type string.
+  <xd:param type="string">The string to be processed.</xd:param>
+</xd:doc>
+    
+
+    
+    Look at the source code of the XSLTdoc tool for more examples. The source
+      code is accessible through this website. Just go to a detailed description
+      of a template or function and click on the source link.
+    
+    Inline tags
+    You can use so called inline tags to tag special parts inside a xs:short or xd:detail element:
+    The xd:xml inline tag can be used to to print print an xml to the output. The whole xml inside the tag is transformed to html by XSLTdoc.
+    <xd:doc>
+  <xd:detail>
+    The following XML inside the xd:xml tag is printed exactly as it shows here:
+    <xd:xml>
+<html>
+  <head></head>
+  <body>
+    Bla
+  </body>
+</html>
+    </xd:xml>
+  <xd:detail>
+</xd:doc>
+<xsl:...>
+    
+    
+    Download
+    Downloads are available through the sourceforge project page.
+    By downloading any of these files you are accepting the licence condition stated below.
+
+    Copyright And Licence
+    The software and documenation downloadable from this site is made up of the following items:
+    
+      Software and documentation for the XSLTdoc documentation tool. The copyright for these items belongs to P&P Software. These items can be downloaded and used under the terms of the GNU General Public Licence.
+       The The Saxon XSLT and XQuery Processor from Saxonica Limited. This software is used and distributed in accordance with the terms of the Mozilla Public License Version 1.0.
+      The XML to HTML Verbatim Formatter with Syntax Highlighting. This software was downloaded from http://www.informatik.hu-berlin.de/~obecker/XSLT/. There was no license information available on this site at the time of downloading (October 2004).
+    
+    
+      THE XSLTdoc DELIVERABLES ARE PROVIDED "AS IS'' AND ANY EXPRESSED 
+      OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
+      OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN 
+      NO EVENT SHALL THE PROVIDER OF THE SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, 
+      INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
+      PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
+      HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR 
+      TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
+      EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    
+  
+  
+  
+
+  
+  
+    
+    
+  
