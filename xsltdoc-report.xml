@@ -6,7 +6,7 @@
       1.1, 2.0). This project has recently been moved, with kind permission from 
       the original authors Iwan Birrer and Alessandro Pasetti, from 
       SourceForge to this new home on 
-      GitHub (project repository at XSLTdoc/XSLTdoc. 
+      GitHub (project repository at XSLTdoc/XSLTdoc). 
     The XSLTdoc tool defines
       conventions to document XSL "code elements" directly in the source code. These
       "documentation elements" are then extracted by the XSLTdoc
