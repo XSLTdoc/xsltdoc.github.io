@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html
   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html><head><title>XML source view</title><link rel="stylesheet" type="text/css" href="../xmlverbatim.css"></link><meta http-equiv="Content-Type" content="text/html; Charset=UTF-8"></meta></head><body class="xmlverb-default"><tt>
+<html><head><title>XML source view</title><link rel="stylesheet" type="text/css" href="./xmlverbatim.css"></link><meta http-equiv="Content-Type" content="text/html; Charset=UTF-8"></meta></head><body class="xmlverb-default"><tt>
 <!-- converted by xmlverbatim.xsl 1.1, (c) O. Becker -->
 <div xmlns:xd="http://www.pnp-software.com/XSLTdoc" class="xmlverb-default">&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e1">stylesheet</a></span><span class="xmlverb-ns-name"> xmlns:xsl</span>="<span class="xmlverb-ns-uri">http://www.w3.org/1999/XSL/Transform</span>"<span class="xmlverb-ns-name"> xmlns:xs</span>="<span class="xmlverb-ns-uri">http://www.w3.org/2001/XMLSchema</span>"<span class="xmlverb-ns-name"> xmlns:xd</span>="<span class="xmlverb-ns-uri">http://www.pnp-software.com/XSLTdoc</span>"<span class="xmlverb-ns-name"> xmlns:util</span>="<span class="xmlverb-ns-uri">http://www.pnp-software.com/util</span>"<span class="xmlverb-ns-name"> xmlns</span>="<span class="xmlverb-ns-uri">http://www.w3.org/1999/xhtml</span>" <span class="xmlverb-attr-name">exclude-result-prefixes</span>="<span class="xmlverb-attr-content">#all</span>" <span class="xmlverb-attr-name">version</span>="<span class="xmlverb-attr-content">2.0</span>"&gt;<span class="xmlverb-text"><br></br>
   <br></br>
@@ -126,24 +126,24 @@
   </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e164">template</a></span> <span class="xmlverb-attr-name">match</span>="<span class="xmlverb-attr-content">xsl:function | xsl:template | xsl:stylesheet | xsl:transform | xsl:param | xsl:variable | xsl:attribute-set | xsl:key | xsl:output | xsl:preserve-space | xsl:strip-space | xsl:namespace-alias | xsl:character-map | xsl:decimal-format | xd:mode</span>" <span class="xmlverb-attr-name">mode</span>="<span class="xmlverb-attr-content">printDetailDescription</span>"&gt;<span class="xmlverb-text"><br></br>
     </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e166">param</a></span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">doc</span>" <span class="xmlverb-attr-name">select</span>="<span class="xmlverb-attr-content">xd:getDoc(.)</span>" <span class="xmlverb-attr-name">as</span>="<span class="xmlverb-attr-content">element(xd:doc)?</span>" /&gt;<span class="xmlverb-text"><br></br>
     </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e168">choose</a></span>&gt;<span class="xmlverb-text"><br></br>
-  </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e170">when</a></span> <span class="xmlverb-attr-name">test</span>="<span class="xmlverb-attr-content">count($doc) != 0</span>"&gt;<span class="xmlverb-text"><br></br>
-    </span>&lt;!--<span class="xmlverb-comment"> xd documentation exists, find detail description </span>--&gt;<span class="xmlverb-text"><br></br>
-  </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e174">choose</a></span>&gt;<span class="xmlverb-text"><br></br>
-    </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e176">when</a></span> <span class="xmlverb-attr-name">test</span>="<span class="xmlverb-attr-content">$doc/xd:detail</span>"&gt;<span class="xmlverb-text"><br></br>
-      </span>&lt;<span class="xmlverb-element-name"><a name="d22e178">div</a></span> <span class="xmlverb-attr-name">class</span>="<span class="xmlverb-attr-content">detailDescr</span>"&gt;<span class="xmlverb-text"><br></br>
-        </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e180">apply-templates</a></span> <span class="xmlverb-attr-name">select</span>="<span class="xmlverb-attr-content">$doc/xd:detail/child::node()</span>" <span class="xmlverb-attr-name">mode</span>="<span class="xmlverb-attr-content">XdocTags</span>" /&gt;<span class="xmlverb-text"><br></br>
-      </span>&lt;/<span class="xmlverb-element-name">div</span>&gt;<span class="xmlverb-text"><br></br>
-    </span>&lt;/<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name">when</span>&gt;<span class="xmlverb-text"><br></br>
-    </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e184">otherwise</a></span>&gt;<span class="xmlverb-text"><br></br>
-      </span>&lt;!--<span class="xmlverb-comment"><br></br>
-        No xd:detail element found, use text after first period as<br></br>
-        detail description.<br></br>
-      </span>--&gt;<span class="xmlverb-text"><br></br>
-      </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e188">call-template</a></span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">extractDetailDescription</span>"&gt;<span class="xmlverb-text"><br></br>
-        </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e190">with-param</a></span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">doc</span>" <span class="xmlverb-attr-name">select</span>="<span class="xmlverb-attr-content">$doc</span>" /&gt;<span class="xmlverb-text"><br></br>
-      </span>&lt;/<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name">call-template</span>&gt;<span class="xmlverb-text"><br></br>
-    </span>&lt;/<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name">otherwise</span>&gt;<span class="xmlverb-text"><br></br>
-  </span>&lt;/<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name">choose</span>&gt;<span class="xmlverb-text"><br></br>
+      </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e170">when</a></span> <span class="xmlverb-attr-name">test</span>="<span class="xmlverb-attr-content">count($doc) != 0</span>"&gt;<span class="xmlverb-text"><br></br>
+      </span>&lt;!--<span class="xmlverb-comment"> xd documentation exists, find detail description </span>--&gt;<span class="xmlverb-text"><br></br>
+      </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e174">choose</a></span>&gt;<span class="xmlverb-text"><br></br>
+      </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e176">when</a></span> <span class="xmlverb-attr-name">test</span>="<span class="xmlverb-attr-content">$doc/xd:detail</span>"&gt;<span class="xmlverb-text"><br></br>
+        </span>&lt;<span class="xmlverb-element-name"><a name="d22e178">div</a></span> <span class="xmlverb-attr-name">class</span>="<span class="xmlverb-attr-content">detailDescr</span>"&gt;<span class="xmlverb-text"><br></br>
+          </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e180">apply-templates</a></span> <span class="xmlverb-attr-name">select</span>="<span class="xmlverb-attr-content">$doc/xd:detail/child::node()</span>" <span class="xmlverb-attr-name">mode</span>="<span class="xmlverb-attr-content">XdocTags</span>" /&gt;<span class="xmlverb-text"><br></br>
+        </span>&lt;/<span class="xmlverb-element-name">div</span>&gt;<span class="xmlverb-text"><br></br>
+      </span>&lt;/<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name">when</span>&gt;<span class="xmlverb-text"><br></br>
+      </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e184">otherwise</a></span>&gt;<span class="xmlverb-text"><br></br>
+        </span>&lt;!--<span class="xmlverb-comment"><br></br>
+          No xd:detail element found, use text after first period as<br></br>
+          detail description.<br></br>
+        </span>--&gt;<span class="xmlverb-text"><br></br>
+        </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e188">call-template</a></span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">extractDetailDescription</span>"&gt;<span class="xmlverb-text"><br></br>
+          </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e190">with-param</a></span> <span class="xmlverb-attr-name">name</span>="<span class="xmlverb-attr-content">doc</span>" <span class="xmlverb-attr-name">select</span>="<span class="xmlverb-attr-content">$doc</span>" /&gt;<span class="xmlverb-text"><br></br>
+        </span>&lt;/<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name">call-template</span>&gt;<span class="xmlverb-text"><br></br>
+      </span>&lt;/<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name">otherwise</span>&gt;<span class="xmlverb-text"><br></br>
+    </span>&lt;/<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name">choose</span>&gt;<span class="xmlverb-text"><br></br>
   </span>&lt;/<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name">when</span>&gt;<span class="xmlverb-text"><br></br>
   </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e196">otherwise</a></span>&gt;<span class="xmlverb-text"><br></br>
     </span>&lt;<span class="xmlverb-element-nsprefix">xsl</span>:<span class="xmlverb-element-name"><a name="d22e198">text</a></span> /&gt;<span class="xmlverb-text"><br></br>
