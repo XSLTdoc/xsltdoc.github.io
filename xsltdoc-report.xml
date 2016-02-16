@@ -5,7 +5,7 @@
       XSLTdoc is a Javadoc-like tool for all versions of XSLT (1.0,
       1.1, 2.0). This project has recently been moved, with kind permission from 
       the original authors Iwan Birrer and Alessandro Pasetti, from 
-      SourceForge to this new home on 
+      SourceForge to its new home on 
       GitHub (project repository at XSLTdoc/XSLTdoc). 
     The XSLTdoc tool defines
       conventions to document XSL "code elements" directly in the source code. These
