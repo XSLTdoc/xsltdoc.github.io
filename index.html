@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/default.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js">
     </script>
-    <script>hljs.initHighlightingOnLoad();</script>    
+    <script>hljs.initHighlightingOnLoad();</script>
   </head>
   <body>
     <div id="navbar">
@@ -79,7 +79,7 @@ xsltdoc(opts, function(targetDir) {
 </code></pre>
 <h2>Running manually</h2>
 <p>Download the latest release from
-<a href="https://github.com/XSLTdoc/XSLTdoc/archive/1.3.1.zip">GitHub</a>, and unzip it
+<a href="https://github.com/XSLTdoc/XSLTdoc/releases/latest">GitHub</a>, and unzip it
 to the location of your choice.</p>
 <p>XSLTdoc is written in XSLT 2.0. You need an XSLT 2.0 processor to run it.
 Download the latest version of Saxon-HE
@@ -90,8 +90,10 @@ the XSLTdoc directory.</p>
 <p>The examples here assume you’re on a Unix-flavored box with a bash shell. If
 you are on Windows, adjust accordingly. The following commands will accomplish
 all of the above instructions, and set an environment variable, <code>XSLTDOC</code>, to
-point to the base directory of the tool.</p>
-<pre><code class="bash">wget https://github.com/XSLTdoc/XSLTdoc/archive/1.3.1.zip
+point to the base directory of the tool. Substitute whatever the current
+latest release version number is.</p>
+<pre><code class="bash">https://github.com/XSLTdoc/XSLTdoc/archive/latest.zip
+wget https://github.com/XSLTdoc/XSLTdoc/archive/1.3.1.zip
 unzip 1.3.1.zip
 export XSLTDOC=`pwd`/XSLTdoc-1.3.1/
 wget https://sourceforge.net/projects/saxon/files/Saxon-HE/9.7/SaxonHE9-7-0-3J.zip
@@ -245,47 +247,46 @@ first run a build, and then bring up the “doc” pages
 in a static server to make sure they look okay. Then run</p>
 <pre><code class="bash">grunt gh-pages
 </code></pre>
-<h3>Releasing and publishing to npm</h3>
-<p>Here are some instructions with a bunch of manual tests to make sure everything
-is working correctly.</p>
-<p>Wipe out any temporary directories and files, bump the version number,
-update the release notes, and then:</p>
-<pre><code class="bash">npm uninstall -g .
-npm uninstall -g xsltdoc
-git clean -ndx    # dry-run "super clean", make sure it's okay, then
-git clean -dxf
-</code></pre>
-<p>Look for anywhere the version number might appear, and bump it:</p>
-<pre><code class="">grep . -type f -exec grep -H '1.3.1' {} \;
-</code></pre>
-<p>Then go through the build instructions in the README, step-by-step, to make
-sure they are still up-to-date.</p>
-<p>To check the docs, start <code>http-server</code> and then
-go to http://localhost:8080/doc.</p>
-<p>Then try out the instructions for using the tool with a new project:</p>
-<pre><code class="bash">npm install -g .    #=&gt; in the XSLTdoc directory
-mkdir -p ~/temp/try-xsltdoc
-cd ~/temp/try-xsltdoc
-xsltdoc --init
-cat &lt;&lt;HERE &gt; test.xsl
-&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  version="2.0"&gt;  
-&lt;/xsl:stylesheet&gt;
-HERE
-xsltdoc
-http-server  # Go to http://localhost:8080/doc, and verify
-</code></pre>
-<p>Lastly:</p>
+<h3>Releasing and publishing</h3>
+<p>Here’s a checklist for doing a release. Don’t bump the version number –
+that will be done automatically.</p>
 <ul>
 <li>
 <p>Update release-notes.md</p>
 </li>
 <li>
-<p>Make sure everything is committed and pushed,</p>
+<p>Wipe out any development side-effects:</p>
+<pre><code class="bash">npm uninstall -g xsltdoc
+git clean -ndxff    # dry-run "super clean", make sure it's okay, then
+git clean -dxff
+git checkout -f
+</code></pre>
+</li>
+<li>
+<p>Do <code>npm install</code> and <code>grunt</code>; make sure tests pass.</p>
+</li>
+<li>
+<p>Check the docs. Start <code>http-server</code> and then
+go to http://localhost:8080/doc.</p>
+</li>
+<li>
+<p>Try out the instructions for using the tool with a new project. Currently:</p>
+<pre><code class="bash">npm install -g .    #=&gt; in the XSLTdoc directory
+export XSLTDOC=`pwd`
+mkdir -p ~/temp/try-xsltdoc
+cd ~/temp/try-xsltdoc
+xsltdoc --init
+cp $XSLTDOC/test/test.xsl .
+xsltdoc
+http-server  # Go to http://localhost:8080/doc, and verify
+</code></pre>
+</li>
+<li>
+<p>Make sure everything is committed and pushed.</p>
 </li>
 <li>
 <p>Tag, publish, and re-generate the gh-pages:</p>
-<pre><code class="">git commit ...
+<pre><code class="bash">git commit ...
 git tag -a 1.3.1
 git push
 git push --tags
@@ -365,7 +366,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
   </div>
     </div>
     <div id="footer">
-      <div style="float:left">Generated with <a target="_blank" href="https://xsltdoc.github.io">XSLTdoc 1.3.1</a></div>
+      <div style="float:left">Generated with <a target="_blank" href="https://xsltdoc.github.io">XSLTdoc 1.3.2</a></div>
       <div style="float:right">
         © 2009, <a target="_blank" href="http://www.pnp-software.com/">P&amp;P Software</a>
       </div>

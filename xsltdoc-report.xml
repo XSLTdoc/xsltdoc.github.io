@@ -67,7 +67,9 @@ the XSLTdoc directory.
 The examples here assume you’re on a Unix-flavored box with a bash shell. If
 you are on Windows, adjust accordingly. The following commands will accomplish
 all of the above instructions, and set an environment variable, XSLTDOC, to
-point to the base directory of the tool.
+point to the base directory of the tool. Substitute whatever the current
+latest release version number is.
+https://github.com/XSLTdoc/XSLTdoc/archive/latest.zip
 wget https://github.com/XSLTdoc/XSLTdoc/archive/1.3.1.zip
 unzip 1.3.1.zip
 export XSLTDOC=`pwd`/XSLTdoc-1.3.1/
@@ -222,43 +224,42 @@ first run a build, and then bring up the “doc” pages
 in a static server to make sure they look okay. Then run
 grunt gh-pages
 
-Releasing and publishing to npm
-Here are some instructions with a bunch of manual tests to make sure everything
-is working correctly.
-Wipe out any temporary directories and files, bump the version number,
-update the release notes, and then:
-npm uninstall -g .
-npm uninstall -g xsltdoc
-git clean -ndx    # dry-run "super clean", make sure it's okay, then
-git clean -dxf
-
-Look for anywhere the version number might appear, and bump it:
-grep . -type f -exec grep -H '1.3.1' {} \;
-
-Then go through the build instructions in the README, step-by-step, to make
-sure they are still up-to-date.
-To check the docs, start http-server and then
-go to http://localhost:8080/doc.
-Then try out the instructions for using the tool with a new project:
-npm install -g .    #=> in the XSLTdoc directory
-mkdir -p ~/temp/try-xsltdoc
-cd ~/temp/try-xsltdoc
-xsltdoc --init
-cat <<HERE > test.xsl
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  version="2.0">  
-</xsl:stylesheet>
-HERE
-xsltdoc
-http-server  # Go to http://localhost:8080/doc, and verify
-
-Lastly:
+Releasing and publishing
+Here’s a checklist for doing a release. Don’t bump the version number –
+that will be done automatically.
 
 
 Update release-notes.md
 
 
-Make sure everything is committed and pushed,
+Wipe out any development side-effects:
+npm uninstall -g xsltdoc
+git clean -ndxff    # dry-run "super clean", make sure it's okay, then
+git clean -dxff
+git checkout -f
+
+
+
+Do npm install and grunt; make sure tests pass.
+
+
+Check the docs. Start http-server and then
+go to http://localhost:8080/doc.
+
+
+Try out the instructions for using the tool with a new project. Currently:
+npm install -g .    #=> in the XSLTdoc directory
+export XSLTDOC=`pwd`
+mkdir -p ~/temp/try-xsltdoc
+cd ~/temp/try-xsltdoc
+xsltdoc --init
+cp $XSLTDOC/test/test.xsl .
+xsltdoc
+http-server  # Go to http://localhost:8080/doc, and verify
+
+
+
+Make sure everything is committed and pushed.
 
 
 Tag, publish, and re-generate the gh-pages:
