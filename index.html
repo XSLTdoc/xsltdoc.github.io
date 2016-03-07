@@ -255,20 +255,48 @@ npm uninstall -g xsltdoc
 git clean -ndx    # dry-run "super clean", make sure it's okay, then
 git clean -dxf
 </code></pre>
+<p>Look for anywhere the version number might appear, and bump it:</p>
+<pre><code class="">grep . -type f -exec grep -H '1.3.1' {} \;
+</code></pre>
 <p>Then go through the build instructions in the README, step-by-step, to make
 sure they are still up-to-date.</p>
 <p>To check the docs, start <code>http-server</code> and then
 go to http://localhost:8080/doc.</p>
-<p>Then make a temp directory as a sibling of this project dir, and do:</p>
-<pre><code class="bash">npm init -f
-npm install ../XSLTdoc
-./node_modules/.bin/xsltdoc --init
-cp ../XSLTdoc/test/test.xsl .
-./node_modules/.bin/xsltdoc
+<p>Then try out the instructions for using the tool with a new project:</p>
+<pre><code class="bash">npm install -g .    #=&gt; in the XSLTdoc directory
+mkdir -p ~/temp/try-xsltdoc
+cd ~/temp/try-xsltdoc
+xsltdoc --init
+cat &lt;&lt;HERE &gt; test.xsl
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  version="2.0"&gt;  
+&lt;/xsl:stylesheet&gt;
+HERE
+xsltdoc
+http-server  # Go to http://localhost:8080/doc, and verify
 </code></pre>
+<p>Lastly:</p>
+<ul>
+<li>
+<p>Update release-notes.md</p>
+</li>
+<li>
+<p>Make sure everything is committed and pushed,</p>
+</li>
+<li>
+<p>Tag, publish, and re-generate the gh-pages:</p>
+<pre><code class="">git commit ...
+git tag -a 1.3.1
+git push
+git push --tags
+npm publish
+grunt ghPages
+</code></pre>
+</li>
+</ul>
 <h2>See also</h2>
 <ul>
-<li><a href="release-notes.md">Release notes</a></li>
+<li><a href="https://github.com/XSLTdoc/XSLTdoc/blob/master/release-notes.md">Release notes</a></li>
 </ul>
 <h2>Notes on Node.js implementation</h2>
 <p>I (Chris Maloney) ported this to Node.js as a proof-of-concept, to see if it
