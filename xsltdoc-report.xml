@@ -2,90 +2,95 @@
   
   
     XSLTdoc - code documentation tool for XSLT
-XSLTdoc is a Javadoc-like tool for XSLT all versions of XSLT (1.0, 1.1,
-2.0).
-See also the home page. This project has recently
-been moved, with kind permission from the original authors Iwan Birrer and
-Alessandro Pasetti, from
-SourceForge to a new home on
-GitHub.
-The XSLTdoc tool defines conventions for documenting XSLT "code elements"
-directly in the source code. These “documentation elements” are then extracted
-by the XSLTdoc tool to build a documentation consisting of several linked
-HTML pages which facilitate easy access. The
-XSLT source code is also rendered with syntax highlighting.
+XSLTdoc is a Javadoc-like tool for documenting XSLT.
+Home page
+The old home for this project was here on
+SourceForge.
+The XSLTdoc tool defines conventions for documenting XSLT source files. The
+tool extracts these comments and builds documentation as a set of HTML pages.
+The documentation includes pages that display the XSLT source code with syntax
+highlighting, among many other features.
 Features
 
+Supports XSLT include and import
 Syntax highlighted source code
-Generates documentation whole sets of stylesheets, following includes and imports
-Style customizeable with CSS stylesheets
-Site layout is based on a customizeable/interchangeable html template
+Custom CSS stylesheets
+Document layout is customizeable
 Easily extensible with new tags
 Open source under GPL license
 Written in XSLT
-Uses Node.js, npm, and node-java for ease of packaging, installation, and running
+Uses Node.js, npm, and node-java for ease of packaging, installation, 
+and running
 
-Installing
-The easiest (but not the only) way to install and use this tool is with Node.js.
-If you don’t have that installed, and don’t want to install it, then
-see the section below, “Running manually”.
-To install the XSLTdoc tool:
+Requirements
+Java Runtime Environment (JRE)
+This tool requires a Java Runtime Environment (JRE). To determine whether
+or not your system has a JRE installed, run the following command at a
+terminal:
+java -version
+
+This library is known to work with Java version 1.8; other versions have not
+been tested. (If you try it with some other version, and find that it doesn’t
+work, please open an issue).
+If your system does not have a suitable JRE installed, you can download one
+from
+here.
+Node.js - optional
+The easiest way to install and use this tool is with the Node.js package
+manager npm and the included wrapper scripts. If, however, you prefer not
+to install Node.js, it is not difficult to set it up to run without them –
+see Installing and running - manually, below.
+To determine whether or not Node.js is installed on your system:
+node --version
+
+To install it, download it from the Node.js
+website, and follow the installation instructions
+there.
+<a name=‘run-with-node’></a>
+Installing and running with Node.js
+To install the tool, run the following from a terminal:
 npm install -g xsltdoc
 
-Running
-In the project where your XSLT resides, create a copy of the default
-configuration file, named xsltdoc-config.xml, with:
+To set up an XSLT project to use the tool, cd to the project
+directory, and create a new default configuration file with:
 xsltdoc --init
 
-Open this config file in an editor, and change the settings to suit your
-needs. There are copious comments describing the meaning of each setting, and
-more detailed descriptions below.
-You can rename this config file if you want, but then you will have to specify
-the name with a command line option, whenever you run xsltdoc.
-To run the tool, and generate the documenation:
+This writes a file named xsltdoc-config.xml that contains the default
+settings as well as extensive comments describing the various options.
+Open this file in any editor, and change the settings to suit your needs.
+You can try out the tool with a sample XSLT. Create a directory called
+sample-project, and download this sample XSLT
+file
+to that directory. Then:
+cd sample-project
+xsltdoc --init
 xsltdoc
 
-Use the --help switch to get some more usage information.
-You can run it programmatically from another Node.js script with
-var xsltdoc = require('xsltdoc');
-
-// The conversion runs asynchronously and then invokes a callback
-xsltdoc(opts, function(targetDir) {
-  console.log('Done. Documentation written to ' + targetDir);
-});
-
-Running manually
-Download the latest release from
-GitHub, and unzip it
-to the location of your choice.
+The tool should produce a set of documentation pages in the doc/
+subdirectory. To see the results, open the doc/index.html file in
+your browser.
+<a name=‘run-manually’></a>
+Installing and running manually (without Node.js)
+To use the tool without Node.js, first download one of the latest
+release bundles from
+here. Unzip the
+bundle file to a directory of your choice.
 XSLTdoc is written in XSLT 2.0. You need an XSLT 2.0 processor to run it.
 Download the latest version of Saxon-HE
 from the Sourceforge download
 page (for example,
 SAXONHE9-7-0-3J.zip) and extract that into the lib subdirectory of
 the XSLTdoc directory.
-The examples here assume you’re on a Unix-flavored box with a bash shell. If
-you are on Windows, adjust accordingly. The following commands will accomplish
-all of the above instructions, and set an environment variable, XSLTDOC, to
-point to the base directory of the tool. Substitute whatever the current
-latest release version number is.
-https://github.com/XSLTdoc/XSLTdoc/archive/latest.zip
-wget https://github.com/XSLTdoc/XSLTdoc/archive/1.3.1.zip
-unzip 1.3.1.zip
-export XSLTDOC=`pwd`/XSLTdoc-1.3.1/
-wget https://sourceforge.net/projects/saxon/files/Saxon-HE/9.7/SaxonHE9-7-0-3J.zip
-unzip SaxonHE9-7-0-3J.zip -d $XSLTDOC/lib saxon9he.jar
-# clean up
-rm 1.3.1.zip
-rm SaxonHE9-7-0-3J.zip
-
-To set up your project’s configuration file, copy the template from the tool
+Set the environment variable XSLTDOC to the path of the directory to
+which you extracted the bundle.
+To set up a project’s configuration file, copy the template from the tool
 directory:
 cp $XSLTDOC/templates/xsltdoc-config.xml .
 
 Then open it in an editor and change the settings as needed.
-Next, to generate the documentation:
-java -jar $XSLTDOC/lib/saxon9he.jar xsltdoc-config.xml $XSLTDOC/xsl/xsltdoc.xsl
+To generate the documentation:
+java -jar $XSLTDOC/lib/saxon9he.jar xsltdoc-config.xml \
+  $XSLTDOC/xsl/xsltdoc.xsl
 
 Fonts, colors and layout of the HTML documentation are defined in a few CSS
 files which can be found in the css directory of the installation. Copy these
@@ -94,7 +99,16 @@ cp $XSLTDOC/css/* doc
 
 Note: If you need an older version of XSLTdoc, you can find them listed
 here.
-Documenting your XSLT code
+API
+You can run it programmatically from a Node.js script with
+const xsltdoc = require('xsltdoc');
+
+// The conversion runs asynchronously and then invokes a callback
+xsltdoc(opts, targetDir => {
+  console.log('Done. Documentation written to ' + targetDir);
+});
+
+Documentation format
 Documentation elements are written in XML. Because XSLT is expressed in XML
 too, it is necessary to define a new namespace for XSLTdoc to enable a XSLT
 processor to distinguish between documentation and source code. The URI for
@@ -119,7 +133,7 @@ want to write a plain text comment the xd:doc element can contain simple
 text. Text before the first period is considered as short description, the
 remaining as detailed description:
 <xd:doc>
-  This is the short description. And here comes a more detailed 
+  This is the short description. And here comes a more detailed
   description that appears in the detailed view of the documentation only.
 </xd:doc>
 <xsl:...>
@@ -128,10 +142,10 @@ If you use this technique, then no HTML elements are allowed in the text. If
 you want to use HTML tags within short and detailed description the text for
 the short and detailed description needs to enclosed in special XSLTdoc tags:
 <xd:doc>
-  <xd:short>This is the short description with 
+  <xd:short>This is the short description with
     <code>HTML tags</code>.</xd:short>
   <xd:detail>
-    And here comes a <b>more detailed</b> 
+    And here comes a <b>more detailed</b>
     description showed only in the detailed view of the documentation.
   </xd:detail>
 </xd:doc>
@@ -187,7 +201,7 @@ print XML to the output. The whole xml inside the tag is transformed to html
 by XSLTdoc.
 <xd:doc>
   <xd:detail>
-    The following XML inside the xd:xml tag is printed exactly as it shows 
+    The following XML inside the xd:xml tag is printed exactly as it shows
     here:
     <xd:xml>
 <html>
@@ -201,17 +215,12 @@ by XSLTdoc.
 </xd:doc>
 <xsl:...>
 
-Building, developing, contributing
+Developing and contributing
 You don’t need to build this project in order to use it. If you want to build
-it anyway, for whatever reason, this section gives some instructions.
-You’ll need to have Node.js and Java installed.
-Then, after cloning the repository, install all the dependencies that the
-main script uses, and install the grunt build tool (you should only need to
-do these once):
+it anyway, keep reading.
+After cloning the repository:
 npm install
-npm install -g grunt-cli
-
-Then:
+npm install -g grunt-cli  # allows you to run `grunt` from any terminal
 grunt
 
 To get help with grunt, including a list of tasks defined for this project:
@@ -263,12 +272,7 @@ Make sure everything is committed and pushed.
 
 
 Tag, publish, and re-generate the gh-pages:
-git commit ...
-git tag -a 1.3.1
-git push
-git push --tags
-npm publish
-grunt ghPages
+grunt release
 
 
 
@@ -283,34 +287,6 @@ to manage XML/XSLT projects. I think it was a success: as long as the basic
 prerequisites are met, that the user has Node.js and Java installed, then
 installing and running this app are very easy and simple – much easier than
 trying to download, configure and install an XSLT application by hand.
-To do
-
-This README needs a TOC that will work both on GitHub and when it’s passed
-through markdown-it -> xsltdoc. Right now, I don’t know how to get consistent
-heading anchors in.
-The npm xmltools library is currently in the works, which provides a better
-version of the java-driver.js script. This repo should be updated whenever
-that gets done.
-Recently added highlight.js for syntax highlighting of the home page. That
-should probably subsume/replace the “verbatim” syntax highlighting that is
-currently used for XSLT source (which needs work, anyway).
-The node-java-maven dependency right now points to a specific commit on
-GitHub, because of a very minor
-fix to remove a console.log message. This should be updated whenever
-it’s released again.
-It would be nice to auto-generate documentation for the JavaScript here.
-I did some experimenting with jsdoc (see this tag), docco, and
-grok, but didn’t find anything perfect:
-
-jsdoc - a bit onerous in terms of getting your structured comments
-just right; especially for CommonJS modules – it’s a bad fit.
-docco and grok - too unstructured. They produce very pretty pages,
-but nothing like API documentation.
-
-
-What would be really cool is if we could integrate that JS documentation
-framework with this XSLTdoc output – a generalized doc framework.
-
 Copyright And Licence
 This license information was copied from the XSLTdoc home
 page on

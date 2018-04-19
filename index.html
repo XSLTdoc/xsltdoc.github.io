@@ -25,99 +25,113 @@
     <div id="content">
       <div id="mainPage"><h1></h1>
     <div xml:base="readme.xhtml"><h1>XSLTdoc - code documentation tool for XSLT</h1>
-<p><strong><em>XSLTdoc is a Javadoc-like tool for XSLT all versions of XSLT (1.0, 1.1,
-2.0).</em></strong></p>
-<p>See also the <a href="http://xsltdoc.github.io/">home page</a>. This project has recently
-been moved, with kind permission from the original authors Iwan Birrer and
-Alessandro Pasetti, from
-<a href="https://sourceforge.net/projects/xsltdoc/">SourceForge</a> to a <a href="https://github.com/XSLTdoc/XSLTdoc/">new home on
-GitHub</a>.</p>
-<p>The XSLTdoc tool defines conventions for documenting XSLT "code elements"
-directly in the source code. These “documentation elements” are then extracted
-by the XSLTdoc tool to build a documentation consisting of several linked
-HTML pages which facilitate easy access. The
-XSLT source code is also rendered with syntax highlighting.</p>
+<p><em><strong>XSLTdoc is a Javadoc-like tool for documenting XSLT.</strong></em></p>
+<p><a href="http://xsltdoc.github.io/">Home page</a></p>
+<p>The old home for this project was <a href="https://sourceforge.net/projects/xsltdoc/">here on
+SourceForge</a>.</p>
+<p>The XSLTdoc tool defines conventions for documenting XSLT source files. The
+tool extracts these comments and builds documentation as a set of HTML pages.
+The documentation includes pages that display the XSLT source code with syntax
+highlighting, among many other features.</p>
 <p><strong>Features</strong></p>
 <ul>
+<li>Supports XSLT <code>include</code> and <code>import</code></li>
 <li>Syntax highlighted source code</li>
-<li>Generates documentation whole sets of stylesheets, following includes and imports</li>
-<li>Style customizeable with CSS stylesheets</li>
-<li>Site layout is based on a customizeable/interchangeable html template</li>
+<li>Custom CSS stylesheets</li>
+<li>Document layout is customizeable</li>
 <li>Easily extensible with new tags</li>
 <li>Open source under GPL license</li>
 <li>Written in XSLT</li>
-<li>Uses Node.js, npm, and node-java for ease of packaging, installation, and running</li>
+<li>Uses Node.js, npm, and node-java for ease of packaging, installation, <br />
+and running</li>
 </ul>
-<h2>Installing</h2>
-<p>The easiest (but not the only) way to install and use this tool is with Node.js.
-If you don’t have that installed, and don’t want to install it, then
-see the section below, “Running manually”.</p>
-<p>To install the XSLTdoc tool:</p>
-<pre><code class="bash">npm install -g xsltdoc
+<h2>Requirements</h2>
+<h3>Java Runtime Environment (JRE)</h3>
+<p>This tool requires a Java Runtime Environment (JRE). To determine whether
+or not your system has a JRE installed, run the following command at a
+terminal:</p>
+<pre><code class="console">java -version
 </code></pre>
-<h2>Running</h2>
-<p>In the project where your XSLT resides, create a copy of the default
-configuration file, named <code>xsltdoc-config.xml</code>, with:</p>
+<p>This library is known to work with Java version 1.8; other versions have not
+been tested. (If you try it with some other version, and find that it doesn’t
+work, please open <a href="https://github.com/XSLTdoc/XSLTdoc/issues">an issue</a>).</p>
+<p>If your system does not have a suitable JRE installed, you can download one
+from
+<a href="https://docs.oracle.com/goldengate/1212/gg-winux/GDRAD/java.htm#BGBFJHAB">here</a>.</p>
+<h3>Node.js - optional</h3>
+<p>The easiest way to install and use this tool is with the Node.js package
+manager <code>npm</code> and the included wrapper scripts. If, however, you prefer not
+to install Node.js, it is not difficult to set it up to run without them –
+see <a href="#run-manually">Installing and running - manually</a>, below.</p>
+<p>To determine whether or not Node.js is installed on your system:</p>
+<pre><code class="console">node --version
+</code></pre>
+<p>To install it, download it from <a href="https://nodejs.org/en/">the Node.js
+website</a>, and follow the installation instructions
+there.</p>
+<p>&lt;a name=‘run-with-node’&gt;&lt;/a&gt;</p>
+<h2>Installing and running with Node.js</h2>
+<p>To install the tool, run the following from a terminal:</p>
+<pre><code class="console">npm install -g xsltdoc
+</code></pre>
+<p>To set up an XSLT project to use the tool, <code>cd</code> to the project
+directory, and create a new default configuration file with:</p>
 <pre><code class="bash">xsltdoc --init
 </code></pre>
-<p>Open this config file in an editor, and change the settings to suit your
-needs. There are copious comments describing the meaning of each setting, and
-more detailed descriptions below.
-You can rename this config file if you want, but then you will have to specify
-the name with a command line option, whenever you run <code>xsltdoc</code>.</p>
-<p>To run the tool, and generate the documenation:</p>
-<pre><code class="bash">xsltdoc
+<p>This writes a file named <strong>xsltdoc-config.xml</strong> that contains the default
+settings as well as extensive comments describing the various options.
+Open this file in any editor, and change the settings to suit your needs.</p>
+<p>You can try out the tool with a sample XSLT. Create a directory called
+<strong>sample-project</strong>, and download <a href="https://raw.githubusercontent.com/XSLTdoc/XSLTdoc/master/test/sample.xsl">this sample XSLT
+file</a>
+to that directory. Then:</p>
+<pre><code class="">cd sample-project
+xsltdoc --init
+xsltdoc
 </code></pre>
-<p>Use the <code>--help</code> switch to get some more usage information.</p>
-<p>You can run it programmatically from another Node.js script with</p>
-<pre><code class="javascript">var xsltdoc = require('xsltdoc');
-
-// The conversion runs asynchronously and then invokes a callback
-xsltdoc(opts, function(targetDir) {
-  console.log('Done. Documentation written to ' + targetDir);
-});
-</code></pre>
-<h2>Running manually</h2>
-<p>Download the latest release from
-<a href="https://github.com/XSLTdoc/XSLTdoc/releases/latest">GitHub</a>, and unzip it
-to the location of your choice.</p>
+<p>The tool should produce a set of documentation pages in the <strong>doc/</strong>
+subdirectory. To see the results, open the <strong>doc/index.html</strong> file in
+your browser.</p>
+<p>&lt;a name=‘run-manually’&gt;&lt;/a&gt;</p>
+<h2>Installing and running manually (without Node.js)</h2>
+<p>To use the tool without Node.js, first download one of the latest
+release bundles from
+<a href="https://github.com/XSLTdoc/XSLTdoc/releases/latest">here</a>. Unzip the
+bundle file to a directory of your choice.</p>
 <p>XSLTdoc is written in XSLT 2.0. You need an XSLT 2.0 processor to run it.
 Download the latest version of Saxon-HE
 from the <a href="https://sourceforge.net/projects/saxon/files/Saxon-HE/">Sourceforge download
 page</a> (for example,
 <code>SAXONHE9-7-0-3J.zip</code>) and extract that into the <code>lib</code> subdirectory of
 the XSLTdoc directory.</p>
-<p>The examples here assume you’re on a Unix-flavored box with a bash shell. If
-you are on Windows, adjust accordingly. The following commands will accomplish
-all of the above instructions, and set an environment variable, <code>XSLTDOC</code>, to
-point to the base directory of the tool. Substitute whatever the current
-latest release version number is.</p>
-<pre><code class="bash">https://github.com/XSLTdoc/XSLTdoc/archive/latest.zip
-wget https://github.com/XSLTdoc/XSLTdoc/archive/1.3.1.zip
-unzip 1.3.1.zip
-export XSLTDOC=`pwd`/XSLTdoc-1.3.1/
-wget https://sourceforge.net/projects/saxon/files/Saxon-HE/9.7/SaxonHE9-7-0-3J.zip
-unzip SaxonHE9-7-0-3J.zip -d $XSLTDOC/lib saxon9he.jar
-# clean up
-rm 1.3.1.zip
-rm SaxonHE9-7-0-3J.zip
-</code></pre>
-<p>To set up your project’s configuration file, copy the template from the tool
+<p>Set the environment variable <code>XSLTDOC</code> to the path of the directory to
+which you extracted the bundle.</p>
+<p>To set up a project’s configuration file, copy the template from the tool
 directory:</p>
 <pre><code class="bash">cp $XSLTDOC/templates/xsltdoc-config.xml .
 </code></pre>
 <p>Then open it in an editor and change the settings as needed.</p>
-<p>Next, to generate the documentation:</p>
-<pre><code class="bash">java -jar $XSLTDOC/lib/saxon9he.jar xsltdoc-config.xml $XSLTDOC/xsl/xsltdoc.xsl
+<p>To generate the documentation:</p>
+<pre><code class="bash">java -jar $XSLTDOC/lib/saxon9he.jar xsltdoc-config.xml \
+  $XSLTDOC/xsl/xsltdoc.xsl
 </code></pre>
 <p>Fonts, colors and layout of the HTML documentation are defined in a few CSS
 files which can be found in the <code>css</code> directory of the installation. Copy these
 files to the folder where the documentation was generated. For example:</p>
 <pre><code class="bash">cp $XSLTDOC/css/* doc
 </code></pre>
-<p><strong><em>Note:</em></strong> If you need an older version of XSLTdoc, you can find them listed
+<p><em><strong>Note:</strong></em> If you need an older version of XSLTdoc, you can find them listed
 <a href="https://github.com/XSLTdoc/XSLTdoc/releases">here</a>.</p>
-<h2>Documenting your XSLT code</h2>
+<h2>API</h2>
+<p>You can run it programmatically from a Node.js script with</p>
+<pre><code class="javascript">const xsltdoc = require('xsltdoc');
+
+// The conversion runs asynchronously and then invokes a callback
+xsltdoc(opts, targetDir =&gt; {
+  console.log('Done. Documentation written to ' + targetDir);
+});
+</code></pre>
+<h2>Documentation format</h2>
 <p>Documentation elements are written in XML. Because XSLT is expressed in XML
 too, it is necessary to define a new namespace for XSLTdoc to enable a XSLT
 processor to distinguish between documentation and source code. The URI for
@@ -142,7 +156,7 @@ want to write a plain text comment the <code>xd:doc</code> element can contain s
 text. Text before the first period is considered as short description, the
 remaining as detailed description:</p>
 <pre><code class="xml">&lt;xd:doc&gt;
-  This is the short description. And here comes a more detailed 
+  This is the short description. And here comes a more detailed
   description that appears in the detailed view of the documentation only.
 &lt;/xd:doc&gt;
 &lt;xsl:...&gt;
@@ -151,10 +165,10 @@ remaining as detailed description:</p>
 you want to use HTML tags within short and detailed description the text for
 the short and detailed description needs to enclosed in special XSLTdoc tags:</p>
 <pre><code class="xml">&lt;xd:doc&gt;
-  &lt;xd:short&gt;This is the short description with 
+  &lt;xd:short&gt;This is the short description with
     &lt;code&gt;HTML tags&lt;/code&gt;.&lt;/xd:short&gt;
   &lt;xd:detail&gt;
-    And here comes a &lt;b&gt;more detailed&lt;/b&gt; 
+    And here comes a &lt;b&gt;more detailed&lt;/b&gt;
     description showed only in the detailed view of the documentation.
   &lt;/xd:detail&gt;
 &lt;/xd:doc&gt;
@@ -210,7 +224,7 @@ print XML to the output. The whole xml inside the tag is transformed to html
 by XSLTdoc.</p>
 <pre><code class="xml">&lt;xd:doc&gt;
   &lt;xd:detail&gt;
-    The following XML inside the xd:xml tag is printed exactly as it shows 
+    The following XML inside the xd:xml tag is printed exactly as it shows
     here:
     &lt;xd:xml&gt;
 &lt;html&gt;
@@ -224,18 +238,13 @@ by XSLTdoc.</p>
 &lt;/xd:doc&gt;
 &lt;xsl:...&gt;
 </code></pre>
-<h2>Building, developing, contributing</h2>
+<h2>Developing and contributing</h2>
 <p>You don’t need to build this project in order to use it. If you want to build
-it anyway, for whatever reason, this section gives some instructions.</p>
-<p>You’ll need to have Node.js and Java installed.</p>
-<p>Then, after cloning the repository, install all the dependencies that the
-main script uses, and install the grunt build tool (you should only need to
-do these once):</p>
+it anyway, keep reading.</p>
+<p>After cloning the repository:</p>
 <pre><code class="bash">npm install
-npm install -g grunt-cli
-</code></pre>
-<p>Then:</p>
-<pre><code class="bash">grunt
+npm install -g grunt-cli  # allows you to run `grunt` from any terminal
+grunt
 </code></pre>
 <p>To get help with grunt, including a list of tasks defined for this project:</p>
 <pre><code class="bash">grunt --help
@@ -286,12 +295,7 @@ http-server  # Go to http://localhost:8080/doc, and verify
 </li>
 <li>
 <p>Tag, publish, and re-generate the gh-pages:</p>
-<pre><code class="bash">git commit ...
-git tag -a 1.3.1
-git push
-git push --tags
-npm publish
-grunt ghPages
+<pre><code class="bash">grunt release
 </code></pre>
 </li>
 </ul>
@@ -306,34 +310,6 @@ to manage XML/XSLT projects. I think it was a success: as long as the basic
 prerequisites are met, that the user has Node.js and Java installed, then
 installing and running this app are very easy and simple – much easier than
 trying to download, configure and install an XSLT application by hand.</p>
-<h2>To do</h2>
-<ul>
-<li>This README needs a TOC that will work both on GitHub and when it’s passed
-through markdown-it -&gt; xsltdoc. Right now, I don’t know how to get consistent
-heading anchors in.</li>
-<li>The npm <code>xmltools</code> library is currently in the works, which provides a better
-version of the <code>java-driver.js</code> script. This repo should be updated whenever
-that gets done.</li>
-<li>Recently added highlight.js for syntax highlighting of the home page. That
-should probably subsume/replace the “verbatim” syntax highlighting that is
-currently used for XSLT source (which needs work, anyway).</li>
-<li>The node-java-maven dependency right now points to a specific commit on
-GitHub, because of a very minor
-fix to remove a <code>console.log</code> message. This should be updated whenever
-it’s released again.</li>
-<li>It would be nice to auto-generate documentation for the JavaScript here.
-I did some experimenting with jsdoc (see <a href="">this tag</a>), docco, and
-grok, but didn’t find anything perfect:
-<ul>
-<li>jsdoc - a bit onerous in terms of getting your structured comments
-just right; especially for CommonJS modules – it’s a bad fit.</li>
-<li>docco and grok - too <em>unstructured</em>. They produce very pretty pages,
-but nothing like API documentation.</li>
-</ul>
-</li>
-<li>What would be really cool is if we could integrate that JS documentation
-framework with this XSLTdoc output – a generalized doc framework.</li>
-</ul>
 <h2>Copyright And Licence</h2>
 <p><em>This license information was copied from the <a href="http://www.pnp-software.com/XSLTdoc/#CopyrightAndLicence">XSLTdoc home
 page</a> on
